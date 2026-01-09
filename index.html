@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Data Siswa SMKS 1 Barunawati</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; color: #333; line-height: 1.6;">
+    <header style="background-color: #004d99; color: white; padding: 20px 0; text-align: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        <h1 style="margin-bottom: 5px; font-size: 2em;">Data Siswa SMKS 1 Barunawati</h1>
+        <p>Akses Cepat Data Siswa untuk Guru</p>
+    </header>
+
+    <main style="padding: 20px; max-width: 900px; margin: 20px auto; background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);">
+        <section class="search-section">
+            <h2 style="color: #004d99; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-top: 0;">Cari Data Siswa</h2>
+            <div class="search-form" style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <input type="text" id="searchInput" placeholder="Masukkan NISN atau Nama Siswa" style="flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px;">
+                <button onclick="searchData()" style="background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; transition: background-color 0.3s ease;">Cari Siswa</button>
+            </div>
+            
+            <div id="results" class="results-table" style="margin-top: 20px;">
+                <p class="initial-text" style="text-align: center; padding: 20px; color: #666; background-color: #e9e9e9; border-radius: 4px;">Ketik NISN atau Nama Siswa dan klik 'Cari Siswa'</p>
+            </div>
+        </section>
+    </main>
+
+    <footer style="text-align: center; padding: 15px; background-color: #333; color: white; margin-top: 20px;">
+        <p>&copy; 2025 SMKS 1 Barunawati. Sistem Informasi Internal.</p>
+    </footer>
+
+    <script>
+        // Contoh data siswa (simulasi database)
+        const studentData = [
+            { nisn: '0051234567', nama: 'Budi Santoso', kelas: 'XII TKJ 1', status: 'Aktif' },
+            { nisn: '0069876543', nama: 'Siti Aisyah', kelas: 'XI AKL 2', status: 'Aktif' },
+            { nisn: '0071122334', nama: 'Rizky Fadillah', kelas: 'X BDP 1', status: 'Aktif' }
+            // Tambahkan lebih banyak data di sini
+        ];
+
+        function searchData() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const resultsDiv = document.getElementById('results');
+            
+            // Filter data
+            const filteredData = studentData.filter(student => 
+                student.nisn.includes(query) || student.nama.toLowerCase().includes(query)
+            );
+
+            // Tampilkan hasil
+            if (filteredData.length > 0) {
+                let tableHTML = `
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                        <thead>
+                            <tr>
+                                <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f2f2f2; color: #333; font-weight: bold;">NISN</th>
+                                <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f2f2f2; color: #333; font-weight: bold;">Nama Siswa</th>
+                                <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f2f2f2; color: #333; font-weight: bold;">Kelas</th>
+                                <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f2f2f2; color: #333; font-weight: bold;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                filteredData.forEach(student => {
+                    tableHTML += `
+                        <tr>
+                            <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">${student.nisn}</td>
+                            <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">${student.nama}</td>
+                            <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">${student.kelas}</td>
+                            <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">${student.status}</td>
+                        </tr>
+                    `;
+                });
+                
+                tableHTML += `
+                        </tbody>
+                    </table>
+                `;
+                resultsDiv.innerHTML = tableHTML;
+            } else {
+                resultsDiv.innerHTML = `<p class="no-results" style="text-align: center; padding: 20px; color: #AA4A44; background-color: #FFE6E6; border-radius: 4px;">Tidak ada data siswa ditemukan untuk **"${query}"**.</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
